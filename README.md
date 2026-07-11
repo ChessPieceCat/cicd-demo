@@ -11,7 +11,7 @@ A demonstration of a complete Docker-based Continuous Integration and Continuous
 The goal of this project is to demonstrate a modern deployment workflow that automatically builds, publishes, and deploys a containerized application whenever changes are merged into a protected `main` branch.
 
 <p align="center">
-  <img src="diagrams/cicd-overview.drawio.svg" alt="CI/CD Pipeline Overview" width="900">
+  <img src="diagrams/cicd-overview.drawio.svg" alt="CI/CD Pipeline Overview" width="650">
 </p>
 
 ---
