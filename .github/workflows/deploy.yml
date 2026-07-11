@@ -10,20 +10,18 @@ jobs:
   deploy:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.2.2
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Pull latest image
+        run: |
+          cd /home/tum/cicd-demo
+          docker compose pull
 
-          script: |
-            cd /home/tum/cicd-demo
+      - name: Restart container
+        run: |
+          cd /home/tum/cicd-demo
+          docker compose up -d
 
-            docker compose pull
-            docker compose up -d
-
-            docker image prune -f
+      - name: Clean old images
+        run: docker image prune -f
