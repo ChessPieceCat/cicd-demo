@@ -12,6 +12,8 @@ jobs:
     permissions:
       contents: read
       packages: write
+    env:
+      IMAGE_NAME: ghcr.io/${{ github.repository }}:latest
 
     steps:
       - name: Checkout Repository
@@ -26,8 +28,8 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t ghcr.io/${{ github.repository }}:latest .
+          docker build -t "${IMAGE_NAME,,}" .
 
       - name: Push Docker Image
         run: |
-          docker push ghcr.io/${{ github.repository }}:latest
+          docker push "${IMAGE_NAME,,}"
