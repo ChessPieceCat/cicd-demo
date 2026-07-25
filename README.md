@@ -18,24 +18,15 @@ The goal of this project is to demonstrate a modern deployment workflow that aut
 
 ## Overview
 
-This project focuses on building a reliable software delivery pipeline rather than a complex application. It demonstrates a complete CI/CD workflow that can be reused for future projects while showcasing modern DevOps practices.
-
-The pipeline automatically:
-
-* Builds Docker images using GitHub Actions
-* Publishes images to GitHub Container Registry (GHCR)
-* Deploys to a self-hosted Ubuntu server
-* Verifies successful deployment with health checks
-
----
+This project focuses on building a reliable software delivery pipeline. It demonstrates a complete CI/CD workflow that can be reused for future projects while showcasing modern DevOps practices.
 
 ## Features
 
 * Automated Docker image builds using GitHub Actions
-* Docker Buildx with build layer caching
-* Automatic publishing to GitHub Container Registry (GHCR)
+* Optimized Docker image builds using Buildx layer caching
+* Automatic publishing to GitHub Container Registry
 * Immutable Docker image tagging using Git commit SHAs
-* Self-hosted deployment runner
+* Automated deployments using a self-hosted Github Actions runner
 * Automated deployment verification
 * Protected `main` branch with Pull Request workflow
 * Docker Compose based deployments
@@ -57,7 +48,7 @@ The pipeline automatically:
 
 ## Architecture
 
-The pipeline intentionally separates **continuous integration** from **continuous deployment**.
+The pipeline intentionally separates continuous integration from continuous deployment.
 
 GitHub-hosted runners perform all build operations and publish Docker images to GitHub Container Registry. A self-hosted GitHub Actions runner located on the deployment server is responsible only for deployment. Once a successful build is detected on the protected `main` branch, the server automatically pulls the newest container image, recreates the container with Docker Compose, and verifies that the application is healthy.
 
@@ -73,7 +64,7 @@ This design keeps builds isolated from the deployment environment while allowing
 | CI/CD              | GitHub Actions                    |
 | Containerization   | Docker, Docker Compose            |
 | Container Registry | GitHub Container Registry (GHCR)  |
-| Build System       | Docker Buildx                     |
+| Image Build        | Docker Buildx                     |
 | Deployment         | Self-hosted GitHub Actions Runner |
 | Operating System   | Ubuntu Server 26.04 LTS           |
 
@@ -85,8 +76,8 @@ This design keeps builds isolated from the deployment environment while allowing
 .
 ├── .github/
 │   └── workflows/
-│       ├── build.yml
-│       └── deploy.yml
+│       ├── build.yml # CI
+│       └── deploy.yml # CD
 ├── diagrams/
 │   ├── cicd-overview.drawio
 │   └── cicd-overview.drawio.svg
@@ -100,9 +91,9 @@ This design keeps builds isolated from the deployment environment while allowing
 
 ## Why I Built This
 
-I created this project to gain practical experience designing and implementing a complete deployment pipeline rather than simply learning individual tools in isolation.
+I created this project to gain practical experience designing and implementing a complete deployment pipeline.
 
-Throughout development I gained hands-on experience with:
+Throughout development I gained experience with:
 
 * GitHub Actions workflow design
 * Docker image creation and optimization
@@ -113,7 +104,7 @@ Throughout development I gained hands-on experience with:
 * Automated deployment verification
 * Docker Compose deployments
 
-The resulting pipeline is intended to serve as a reusable deployment template for future projects.
+This pipeline is intended to serve as a deployment template for future projects.
 
 ---
 
@@ -123,12 +114,12 @@ Some of the most valuable experience came from troubleshooting real deployment i
 
 Key takeaways include:
 
-* Understanding the separation between CI and CD responsibilities.
-* Configuring GitHub Rulesets and protected branches for a practical development workflow.
-* Working with Docker Buildx and build caching.
-* Debugging self-hosted GitHub Actions runners.
-* Using immutable Docker image tags to improve deployment traceability.
-* Designing deployments that are automated, repeatable, and verifiable.
+* Understanding the separation between CI and CD responsibilities
+* Configuring GitHub Rulesets and protected branches
+* Working with Docker Buildx and build caching
+* Debugging self-hosted GitHub Actions runners
+* Using immutable Docker image tags
+* Designing deployments that are automated, repeatable, and verifiable
 
 ---
 
@@ -139,9 +130,7 @@ Potential future enhancements include:
 * Automated rollback if deployment verification fails
 * Integration and end-to-end testing before deployment
 * Semantic versioning with GitHub Releases
-* Deployment notifications
 * Multi-environment deployments (development, staging, production)
-* Infrastructure as Code integration
 
 ---
 
